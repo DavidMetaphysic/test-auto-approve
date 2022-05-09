@@ -1,0 +1,19 @@
+name: tests
+
+on:
+  pull_request_target:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  dependabot-auto-approve:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+    - uses: hmarr/auto-approve-action@v2
+      # if: github.actor == 'dependabot[bot]'
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
