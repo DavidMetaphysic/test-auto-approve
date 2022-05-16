@@ -16,6 +16,7 @@ jobs:
         backend-service: ${{ [] || [null]}}
 
   dependabot-auto-approve:
+    needs: [empty-matrix]
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
