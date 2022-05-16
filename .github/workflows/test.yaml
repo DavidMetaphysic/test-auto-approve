@@ -41,6 +41,7 @@ jobs:
 
   dependabot-auto-approve:
     needs: [empty-matrix]
+    if: always()
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
