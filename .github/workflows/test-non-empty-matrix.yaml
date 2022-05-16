@@ -1,4 +1,4 @@
-name: test non empty matrix
+name: test non empty matrixs
 
 on:
   pull_request_target:
