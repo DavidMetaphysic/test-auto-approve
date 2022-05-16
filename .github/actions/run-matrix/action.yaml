@@ -8,11 +8,11 @@ inputs:
 
 runs:
   using: composite
-  strategy:
-    fail-fast: false
-    matrix:
-      value: ${{ inputs.values }}
   steps:
     - shell: bash
+      strategy:
+        fail-fast: false
+        matrix:
+          value: ${{ inputs.values }}
       run: |
         echo "value: \"${{ matrix.value }}\""
