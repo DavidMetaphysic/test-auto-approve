@@ -8,8 +8,11 @@ permissions:
   contents: read
 
 jobs:
-  empty-matrix:
+
+  get-array:
     runs-on: ubuntu-latest
+    outputs:
+      value: ${{ fromJson(steps.get-array.outputs.value) }}
     steps:
     
       - name: Check out code
@@ -18,13 +21,22 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Get array
-        id: get_array
+        id: get-array
         uses: ./.github/actions/return-empty-array
         
-      - name: Run Matrix
-        uses: ./.github/actions/run-matrix
-        with:
-          values: ${{ fromJSON(steps.get_array.outputs.value) }}
+  empty-matrix:
+    name: Run empty matrix job
+    runs-on: ubuntu-latest
+    needs: [get-array]
+    if: needs.get-array.outputs.value
+    strategy:
+      fail-fast: false
+      matrix:
+        value: ${{ needs.get-array.outputs.value }}
+    steps:
+      - shell: bash
+        run: |
+          echo "value = \"${{ matrix.value }}\""
 
 
   dependabot-auto-approve:
