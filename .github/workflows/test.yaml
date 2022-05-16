@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        backend-service: ${{ [] || [null]}}
+        backend-service: ${{ fromJSON('[]') || fromJSON('[null]')}}
     steps:
       - name: Check out code
         uses: actions/checkout@v3
