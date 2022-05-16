@@ -12,7 +12,7 @@ jobs:
   get-array:
     runs-on: ubuntu-latest
     outputs:
-      value: ${{ fromJson(steps.get-array.outputs.value) }}
+      value: ${{ steps.get-array.outputs.value }}
     steps:
     
       - name: Check out code
@@ -32,7 +32,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        value: ${{ needs.get-array.outputs.value }}
+        value: ${{ fromJson(needs.get-array.outputs.value) }}
     steps:
       - shell: bash
         run: |
