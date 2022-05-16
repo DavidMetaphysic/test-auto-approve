@@ -54,6 +54,7 @@ jobs:
     name: Finish
     runs-on: ubuntu-latest
     needs: [dependabot-auto-approve]
+    if: always()
     steps:
       - shell: bash
         run: |
