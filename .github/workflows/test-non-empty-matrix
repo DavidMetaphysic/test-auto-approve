@@ -1,0 +1,50 @@
+name: test non empty matrix
+
+on:
+  pull_request_target:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+
+  get-array:
+    runs-on: ubuntu-latest
+    outputs:
+      values: ${{ steps.get-array.outputs.values }}
+    steps:
+
+      - name: Get array
+        id: get-array
+        shell: bash
+        run: |
+          echo "::set-output name=values::[\"foo\", \"bar\"]"
+        
+        
+  matrix-job:
+    name: Run matrix job
+    runs-on: ubuntu-latest
+    needs: [get-array]
+    if: ${{ fromJson(needs.get-array.outputs.values)[0] != null }}
+    strategy:
+      fail-fast: false
+      matrix:
+        value: ${{ fromJson(needs.get-array.outputs.values) }}
+    steps:
+      - shell: bash
+        run: |
+          echo "value = \"${{ matrix.value }}\""
+
+
+  dependabot-auto-approve:
+    needs: [matrix-job]
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+    - uses: hmarr/auto-approve-action@v2
+      # if: github.actor == 'dependabot[bot]'
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
