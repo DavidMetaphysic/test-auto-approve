@@ -1,4 +1,4 @@
-name: test non empty matrix
+name: test non empty matrixd
 
 on:
   pull_request_target:
