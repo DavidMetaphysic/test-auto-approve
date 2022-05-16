@@ -1,0 +1,18 @@
+name: Runs a matrix job
+description: Runs a matrix job
+
+inputs:
+  values:
+    description: An array of values
+    required: true
+
+runs:
+  using: composite
+  strategy:
+    fail-fast: false
+    matrix:
+      value: ${{ inputs.values }}
+  steps:
+    - shell: bash
+      run: |
+        echo "value: \"${{ matrix.value }}\""
