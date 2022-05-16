@@ -10,13 +10,17 @@ permissions:
 jobs:
   empty-matrix:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        backend-service: ${{ fromJSON('[]') || fromJSON('[null]')}}
     steps:
-      - name: Check out code
-        uses: actions/checkout@v3
+    
+      - name: Get array
+        id: get_array
+        uses: ./.github/actions/return-empty-array
+        
+      - name: Run Matrix
+        uses: ./.github/actions/run-matrix
+        with:
+          values: ${{ fromJSON(steps.get_array.outputs.value) }}
+
 
   dependabot-auto-approve:
     needs: [empty-matrix]
