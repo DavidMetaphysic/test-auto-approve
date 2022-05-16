@@ -1,0 +1,15 @@
+name: Returns an empty array
+description: Returns an empty array
+
+outputs:
+  value:
+    description: Returns an empty array
+    value: ${{ steps.return_empty_array.outputs.value }}
+
+runs:
+  using: composite
+  steps:
+    - id: return_empty_array
+      shell: bash
+      run: |
+        echo "::set-output name=value::[]"
