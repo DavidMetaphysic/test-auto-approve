@@ -8,6 +8,13 @@ permissions:
   contents: read
 
 jobs:
+  empty-matrix:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        backend-service: ${{ [] || [null]}}
+
   dependabot-auto-approve:
     runs-on: ubuntu-latest
     permissions:
