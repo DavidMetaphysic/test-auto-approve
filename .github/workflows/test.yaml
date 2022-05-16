@@ -12,6 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
       - name: Get array
         id: get_array
         uses: ./.github/actions/return-empty-array
